@@ -11,7 +11,9 @@ recognizer.read("face_model.yml")
 # 开启摄像头
 cap = cv.VideoCapture(0)
 cap.set(3, cv.VideoWriter.fourcc("m", "j", "p", "g"))
-names = ["tsp"]
+names = {
+    0: "tsp",
+}
 while True:
     ret, frame = cap.read()
     if not ret:
@@ -27,7 +29,6 @@ while True:
         # 人脸预测
         roi = gray[y : y + h, x : x + w]
         id_num, confidence = recognizer.predict(roi)
-        
         name = names[id_num] if confidence < 50 else "unknown"
         confidence = "{0}%".format(round(100 - confidence))
         cv.putText(
